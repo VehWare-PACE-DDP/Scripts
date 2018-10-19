@@ -9,3 +9,7 @@ To run cursor tracker:
 3) pip install pyautogui
 
 This is the link for the used module : https://pyautogui.readthedocs.io/en/latest/index.html
+
+To run random sound generator : 
+
+1) python soundRandom.py 
