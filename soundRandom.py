@@ -6,12 +6,14 @@ import wave
 import random
 from datetime import datetime
 import time
+import datetime
+fh = open("log.txt","w",0)
 
 print('Press Ctrl-C to quit.')
 try:
 
     while True:
-        random.seed(datetime.now())
+        random.seed(datetime.datetime.now())
         percentage_chance = random.uniform(0.0, 1.0)
         #print 'perc. chance =  ' + str(percentage_chance)
         chance = random.random()
@@ -42,8 +44,12 @@ try:
             stream.close()
             #close PyAudio
             f.close()
-        else:
-            time.sleep(random.randint(5,20)) #randomly wait to 5 to 20 seconds
 
+            fh.write("Sound recorded at %s.\n"%datetime.datetime.now())
+
+        else:
+            time.sleep(random.randint(5,10)) #randomly wait to 5 to 20 seconds
+
+    fh.close()
 except KeyboardInterrupt:
     print '\n'
