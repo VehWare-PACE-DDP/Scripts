@@ -1,10 +1,10 @@
 import cv2
 import sys
-
+import datetime
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
-
+log_file = open("timeLog.txt", "w", 0)
 video_capture = cv2.VideoCapture(0)
 
 while True:
@@ -28,8 +28,14 @@ while True:
         roi_color = frame[y:y+h, x:x+w]
 
         eyes = eye_cascade.detectMultiScale(roi_gray)
+        if len(eyes) < 1:
+            print "Blink"
+            sys.stdout.flush()
+            log_file.write("Blink recorded at  %s.\n" % datetime.datetime.now())
         for (ex, ey, ew, eh) in eyes:
-        	cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(255, 0, 0), 2)
+            blinkFlag = False
+            cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(255, 0, 0), 2)
+    
 
     # Display the resulting frame
     cv2.imshow('Eye&Face Detection', frame)
@@ -40,3 +46,4 @@ while True:
 # When everything is done, release the capture
 video_capture.release()
 cv2.destroyAllWindows()
+log_file.close()
