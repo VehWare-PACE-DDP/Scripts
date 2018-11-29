@@ -1,34 +1,28 @@
 from datetime import datetime
 
-with open("timeLog.txt") as blink_file :
-    lines_blink = blink_file.readlines()
-
 with open("log.txt") as sound_file :
-    lines_sound = sound_file.readlines()
+    arrayS = []
+    for line in sound_file:
+        arrayS.append(line)
 
+with open("timeLog.txt") as blink_file :
+    arrayB = []
+    for line in blink_file:
+        arrayB.append(line)
 
-for i in range(len(lines_blink)):
-    tmp = lines_blink[i].split()
-    times_blink = tmp[4]
+fh = open("Delays.txt","w")
 
-for i in range(len(lines_sound)):
-    tmp_2 = lines_sound[i].split()
-    times_sound = tmp_2[4]
+#print((len(arrayS)))
+#print((len(arrayB)))
 
+for i in range(len(arrayS)):
+    a = arrayS[i]
+    b = arrayB[i]
+    a= int(a)
+    b=int(b)
+    c= b - a
+    fh.write("Delay = %s"%c)
 
-for i in range(len(times_sound)):
-    #delays = int()  - int()
-    datetime_object_1 = datetime.strptime(times_blink[i],'%b %d %Y %I:%M%p')
-    datetime_object_2 = datetime.strptime(times_sound[i],'%b %d %Y %I:%M%p')
-
-    time_1 = round(time.mktime(datetime_object_1.timetuple()))
-    time_2 = round(time.mktime(datetime_object_2 .timetuple()))
-
-    delays = time_1 - time_2
-
-for i in range(len(delays)):
-    print(delays[i])
-    print(" ")
-
+fh.close()
 blink_file.close()
 sound_file.close()
