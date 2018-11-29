@@ -1,6 +1,7 @@
 import cv2
 import sys
 import datetime
+import time
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
@@ -31,7 +32,12 @@ while True:
         if len(eyes) < 1:
             print "Blink"
             sys.stdout.flush()
-            log_file.write("Blink recorded at  %s.\n" % datetime.datetime.now())
+            
+            #log time to a file
+            millis = int(round(time.time() * 1000))
+            t =str(millis)
+            log_file.write("%s\n"%t)
+            
         for (ex, ey, ew, eh) in eyes:
             blinkFlag = False
             cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(255, 0, 0), 2)
