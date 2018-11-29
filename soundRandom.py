@@ -7,6 +7,8 @@ import random
 from datetime import datetime
 import time
 import datetime
+
+
 fh = open("log.txt","w",0)
 
 print('Press Ctrl-C to quit.')
@@ -38,14 +40,17 @@ try:
             while data:
                 stream.write(data)
                 data = f.readframes(chunk)
-
+            #logtoafile
+            millis = int(round(time.time() * 1000))
+            t =str(millis)
+            fh.write("%s\n"%t)
             #stop stream
             stream.stop_stream()
             stream.close()
             #close PyAudio
             f.close()
 
-            fh.write("Sound recorded at %s.\n"%datetime.datetime.now())
+
 
         else:
             time.sleep(random.randint(5,10)) #randomly wait to 5 to 20 seconds
